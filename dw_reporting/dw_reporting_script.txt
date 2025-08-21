@@ -29,3 +29,56 @@ FROM 'FactSales.csv'
 DELIMITER ','
 CSV HEADER;
 ```
+-- create a grouping set sets query using the columns country, category, totalsales
+```sql
+SELECT 
+    country,
+    category,
+    SUM(amount) AS totalsales
+FROM "FactSales" fs
+JOIN "DimCountry" co ON fs.countryid = co.countryid
+JOIN "DimCategory" ca ON fs.categoryid = ca.categoryid
+GROUP BY GROUPING SETS (
+    (country, category),  -- totals by country and category
+    (country),            -- totals by country
+    (category),           -- totals by category
+    ()                    -- grand total
+)
+ORDER BY country, category;
+```
+
+-- Create a rollup query using the columns year, country, and totalsales
+```sql
+SELECT
+    year,
+    country,
+	SUM(amount) AS totalsales
+FROM "FactSales" fs
+JOIN "DimCountry" dc ON fs.countryid = dc.countryid
+JOIN "DimDate" da ON fs.dateid = da.dateid
+GROUP BY
+    ROLLUP (year, country);
+```
+
+-- create a cube query using the columns year, country, and average sales
+```sql
+SELECT
+    year,
+    country,
+	AVG(amount) AS average_sales
+FROM "FactSales" fs
+JOIN "DimCountry" dc ON fs.countryid = dc.countryid
+JOIN "DimDate" da ON fs.dateid = da.dateid
+GROUP BY
+    CUBE (year, country);
+```
+-- create an MQT named total_sales_per_country that has the columns country and total_sales
+```sql
+CREATE MATERIALIZED VIEW total_sales_per_country AS
+SELECT
+    country,
+	SUM(amount) AS total_sales
+FROM "FactSales" fs
+JOIN "DimCountry" dc ON fs.countryid = dc.countryid
+GROUP BY country;
+```
