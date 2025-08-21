@@ -47,6 +47,6 @@ db.electronics.aggregate([
 
 -- export the fields _id, "type", "model", from the "electronics" collection into a file named electronics.csv
 ```bash
-mongoexport -u root -p jxUTDeAi5nuHHJFBTrbirNFl --authenticationDatabase admin \ 
+mongoexport -u <MONGO_USERNAME> -p <MONGO_PASSWORD> --authenticationDatabase admin \ 
 --db catalog --collection electronics --out electronics.csv --type=csv --fields _id,type,model --host mongo
 ```
