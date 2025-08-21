@@ -1,0 +1,31 @@
+-- create database and select Test1 (test1 created because not used "Test1")
+```psql CLI
+CREATE DATABASE Test1;
+\c test1;
+```
+-- load new schema from the senior data_engineer at softcart.com
+```psql CLI
+\i CREATE_SCRIPT.sql
+```
+-- load data into tables
+```psql CLI
+\copy public."DimDate"(dateid, date, Year, Quarter, QuarterName, Month, Monthname, Day, Weekday, WeekdayName)
+FROM 'DimDate.csv'
+DELIMITER ','
+CSV HEADER;
+
+\copy public."DimCategory"(categoryid, category)
+FROM 'DimCategory.csv'
+DELIMITER ','
+CSV HEADER;
+
+\copy public."DimCountry"(countryid, country)
+FROM 'DimCountry.csv'
+DELIMITER ','
+CSV HEADER;
+
+\copy public."FactSales"(orderid, dateid, countryid, categoryid, amount)
+FROM 'FactSales.csv'
+DELIMITER ','
+CSV HEADER;
+```
