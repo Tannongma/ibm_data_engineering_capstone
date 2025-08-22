@@ -80,6 +80,9 @@ def insert_records(records):
                                             quantity) 
                     VALUES ({record[0]}, {record[1]}, {record[2]}, {record[3]});"""
         psql_cursor.execute(statement)
+        
+        # commit the transaction in the postgres database
+        conn.commit() 
 
 insert_records(new_records)
 print("New rows inserted into production datawarehouse = ", len(new_records))
