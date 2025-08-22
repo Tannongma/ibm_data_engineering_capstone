@@ -33,12 +33,6 @@ price decimal DEFAULT 0.0 NOT NULL,
 timestamp TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL
 ```
 
-
--- download automation.py 
-```bash
-wget https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-DB0321EN-SkillsNetwork/ETL/automation.py
-```
-
 -- create table sales_data in PostgreSQL database
 ```PostgreSQL
 CREATE TABLE IF NOT EXISTS sales_data(rowid INTEGER PRIMARY KEY NOT NULL,
@@ -56,3 +50,7 @@ DELIMITER ','
 CSV HEADER;
 ```
 
+-- download automation.py 
+```bash
+wget https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-DB0321EN-SkillsNetwork/ETL/automation.py
+```
