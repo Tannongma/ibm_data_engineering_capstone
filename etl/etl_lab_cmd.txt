@@ -1,0 +1,58 @@
+-- connect to MySQL server (same as in previous activities)
+-- create database sales
+```MySQL
+CREATE DATABASE sales;
+```
+-- download file sales.sql to load into database
+wget https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-DB0321EN-SkillsNetwork/ETL/sales.sql
+
+-- import the data in the file sales.sql into the sales database
+```MySQL 
+use sales;
+\. sales.sql
+```
+-- download the mysqlconnect.py python programs from link
+wget https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/BFgMvlR8BKEjijGlWowK1Q/mysqlconnect.py
+
+-- Option B: If you choose PostgreSQL as the data warehouse
+-- download the postgresqlconnect.py python programs from link
+wget https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/OHNZDzk-BAcrpy75I0DCoA/postgresqlconnect.py
+
+-- install connectors locally 
+```bash 
+python3 -m pip install psycopg2; pip3 install mysql-connector-python
+```
+-- download sales.csv to populate the postgres database
+```bash 
+wget https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/sales-csv3mo8i5SHvta76u7DzUfhiw.csv
+```
+
+-- update postgresqlconnect.py script to create the following columns
+```sql
+price decimal DEFAULT 0.0 NOT NULL,
+timestamp TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL
+```
+
+
+-- download automation.py 
+```bash
+wget https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-DB0321EN-SkillsNetwork/ETL/automation.py
+```
+
+-- create table sales_data in PostgreSQL database
+```PostgreSQL
+CREATE TABLE IF NOT EXISTS sales_data(rowid INTEGER PRIMARY KEY NOT NULL,
+                                    product_id INTEGER NOT NULL,
+                                    customer_id INTEGER NOT NULL,
+                                    price DECIMAL DEFAULT 0.0 NOT NULL,
+									quantity INTEGER DEFAULT 0.0 NOT NULL,
+                                    timestamp TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL);
+
+-- load sales.csv into sales_data table in postgres database
+```psql
+\copy public."sales_data"(rowid,product_id,customer_id,price,quantity,timestamp)
+FROM 'sales-csv3mo8i5SHvta76u7DzUfhiw.csv'
+DELIMITER ','
+CSV HEADER;
+```
+
