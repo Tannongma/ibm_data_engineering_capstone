@@ -1,0 +1,22 @@
+-- start Apache Airflow.
+
+-- download the dataset from the source to the destination mentioned
+```bash 
+wget -P /home/project/airflow/dags/capstone https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-DB0321EN-SkillsNetwork/ETL/accesslog.txt
+```
+-- submit the dags
+```bash 
+export AIRFLOW_HOME=/home/project/airflow;
+echo $AIRFLOW_HOME;
+cp /home/project/ibm_data_engineering_capstone/airflow_pipelines/process_web_log.py $AIRFLOW_HOME/dags
+```
+-- check dag in the list
+```bash 
+airflow dags list|grep "process_web_log"
+```
+
+-- unpause the dag
+```bash 
+airflow dags unpause process_web_log
+```
+
